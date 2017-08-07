@@ -3,6 +3,7 @@ import setuptools
 
 
 requirements = [
+    'beautifulsoup4',
     'selenium',
     'redis'
 ]

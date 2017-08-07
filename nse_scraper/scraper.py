@@ -14,11 +14,24 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.common.by import By
 from redis import Redis
+from bs4 import BeautifulSoup
 
 
 class NSEScraper(object):
 
     SCRAPER = {
+        'fields': [
+            'symbol',
+            'last_traded_price',
+            'percent_of_change',
+            'traded_qty',
+            'value_in_lakhs',
+            'open',
+            'high',
+            'low',
+            'previous_close',
+            'latest_ex_date'
+        ],
         'top_gainers': {
             'tab': 'tab7',
             'table': 'topGainers'
@@ -53,21 +66,22 @@ class NSEScraper(object):
             interesting_elements['tab']
         ).click()
 
-        with self.wait_for_page_load(
+        with self.load_source_for_page(
                 interesting_elements['table'], timeout=10
-        ):
+        ) as source:
             # Find table
-            table = self.chrome.find_element_by_id(
-                interesting_elements['table']
+            table_element = source.find(
+                'table', id=interesting_elements['table']
             )
-            return filter(
-                None,
-                map(
-                    lambda t: t and t.text,
-                    table.find_elements_by_tag_name('tr')[1:]
-                )
+            return map(
+                lambda t: self.extract_fields_from_table(t),
+                table_element.findAll('tr')[1:]
             )
         return []
+
+    def extract_fields_from_table(self, element):
+        elements = [td.text for td in element.findAll('td')[:-1]]
+        return dict(zip(self.SCRAPER['fields'], elements))
 
     def store_now(self):
         data = dict(
@@ -77,7 +91,8 @@ class NSEScraper(object):
         self.redis_store.set('nse:stock_info', json.dumps(data))
 
     @contextmanager
-    def wait_for_page_load(self, id, timeout=30):
-        yield WebDriverWait(self.chrome, timeout).until(
+    def load_source_for_page(self, id, timeout=30):
+        WebDriverWait(self.chrome, timeout).until(
             expected_conditions.visibility_of_element_located((By.ID, id))
         )
+        yield BeautifulSoup(self.chrome.page_source)
