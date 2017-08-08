@@ -5,23 +5,13 @@
     :copyright: (c) 2017 by Joe Paul.
     :license: see LICENSE for details.
 """
-import os
 import json
 
 import cherrypy
 from cherrypy.process.plugins import BackgroundTask
 
 from .scraper import NSEScraper
-
-
-def fp(rel_path):
-    "Return the full path of given rel_path"
-    return os.path.abspath(
-        os.path.join(
-            os.path.dirname(__file__),
-            rel_path
-        )
-    )
+from .utils import fp
 
 
 class App(object):
@@ -58,7 +48,6 @@ if __name__ == '__main__':
         '/': {
             'tools.staticdir.on': True,
             'tools.staticdir.dir': fp('static'),
-            'tools.staticdir.index': 'index.html'
         }
     }
     cherrypy.tree.mount(
