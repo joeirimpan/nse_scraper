@@ -98,6 +98,12 @@ class NSEScraper(object):
         elements = [td.text for td in element.findAll('td')[:-1]]
         return dict(zip(self.SCRAPER['fields'], elements))
 
+    @property
+    def data_key(self):
+        """Return the data key
+        """
+        return 'nse:stock_info'
+
     def store_now(self):
         """Persist data onto redis
         """
@@ -105,7 +111,7 @@ class NSEScraper(object):
             (tab, self.scrape_data_for(tab))
             for tab in ['top_gainers', 'top_losers']
         )
-        self.redis_store.set('nse:stock_info', json.dumps(data))
+        self.redis_store.set(self.data_key, json.dumps(data))
 
     @contextmanager
     def load_source_for_page(self, id, timeout=30):
