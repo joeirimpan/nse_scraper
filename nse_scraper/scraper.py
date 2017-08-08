@@ -124,4 +124,4 @@ class NSEScraper(object):
         WebDriverWait(self.phantomjs, timeout).until(
             expected_conditions.visibility_of_element_located((By.ID, id))
         )
-        yield BeautifulSoup(self.phantomjs.page_source)
+        yield BeautifulSoup(self.phantomjs.page_source, 'html.parser')
