@@ -22,7 +22,7 @@ class App(object):
         self.scraper = NSEScraper()
         # Start the cherrypy background cron-like task
         BackgroundTask(
-            interval=20,
+            interval=5 * 60,
             function=self.scraper.store_now,
             bus=cherrypy.engine
         ).start()

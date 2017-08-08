@@ -13,7 +13,7 @@ test_requirements = ['flake8']
 
 setuptools.setup(
     name="nse-scraper",
-    version="0.0.2",
+    version="0.0.3",
     url="https://github.com/joeirimpan/nse_scraper",
 
     author="Joe Paul",
