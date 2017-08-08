@@ -8,6 +8,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha256-NuCn4IvuZXdBaFKJOAcsU2Q3ZpwbdFisd5dux4jkQ5w=" crossorigin="anonymous" />
     <link rel="stylesheet" href="static/style.css">
 
     <!-- jQuery first, then Tether, then Bootstrap JS, then Underscore JS -->
@@ -38,7 +39,15 @@
             <h5 class="card-title"><%= stocks.symbol %></h5>
             <p class="card-text">Open: <%= stocks.open %></p>
             <p class="card-text">Close: <%= stocks.previous_close %></p>
-            <p class="card-text">% Change: <%= stocks.previous_close %></p>
+            <p class="card-text">% Change: <%= stocks.percent_of_change %></p>
+            <div class="row pull-right pr-1 pb-1">
+              <span class="text-muted">
+                <i class="fa fa-arrow-up" aria-hidden="true"><%= stocks.high %></i>
+              </span>
+              <span class="text-muted ml-1">
+                <i class="fa fa-arrow-down" aria-hidden="true"><%= stocks.low %></i>
+              </span>
+            </div>
           </div>
         </div>
       <%
