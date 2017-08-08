@@ -41,11 +41,8 @@
 
     <script type="text/javascript">
       $(document).ready(function() {
-        $.ajax({
-          url: '/stocks_info.json',
-          method: 'GET',
-          dataType: 'json',
-          success: function(data) {
+        $.getJSON('/stocks_info.json')
+        .then(function(data) {
             var template = _.template($("#top-gainers-losers-tpl").html());
             $('#top-gainers-list').html(
               template({'stocks_data': data.top_gainers})
@@ -53,7 +50,6 @@
             $('#top-losers-list').html(
               template({'stocks_data': data.top_losers})
             );
-          }
         });
       });
     </script>
