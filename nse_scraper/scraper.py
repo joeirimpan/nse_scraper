@@ -45,12 +45,14 @@ class NSEScraper(object):
     def __init__(self, url=None, *args, **kwargs):
         self.url = url or 'https://www.nseindia.com/live_market/dynaContent/live_analysis/top_gainers_losers.htm'  # noqa
         self.redis_store = self.get_redis_client()
-        self.chrome = self.get_chrome_browser()
+        self.phantomjs = self.get_phantomjs_browser()
 
-    def get_chrome_browser(self):
-        chrome = webdriver.Chrome()
-        chrome.get(self.url)
-        return chrome
+    def get_phantomjs_browser(self):
+        """Return phantomjs headless browser
+        """
+        phantomjs = webdriver.PhantomJS()
+        phantomjs.get(self.url)
+        return phantomjs
 
     def get_redis_client(self):
         return Redis(
@@ -62,7 +64,7 @@ class NSEScraper(object):
     def scrape_data_for(self, tab='top_gainers'):
         interesting_elements = self.SCRAPER.get(tab)
         # Trigger click
-        self.chrome.find_element_by_id(
+        self.phantomjs.find_element_by_id(
             interesting_elements['tab']
         ).click()
 
@@ -92,7 +94,7 @@ class NSEScraper(object):
 
     @contextmanager
     def load_source_for_page(self, id, timeout=30):
-        WebDriverWait(self.chrome, timeout).until(
+        WebDriverWait(self.phantomjs, timeout).until(
             expected_conditions.visibility_of_element_located((By.ID, id))
         )
-        yield BeautifulSoup(self.chrome.page_source)
+        yield BeautifulSoup(self.phantomjs.page_source)
