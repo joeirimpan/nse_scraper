@@ -14,7 +14,7 @@ from nse_scraper.utils import fp
 if __name__ == '__main__':
     app = App()
     config = {
-        '/': {
+        '/static': {
             'tools.staticdir.on': True,
             'tools.staticdir.dir': fp('static'),
         }
