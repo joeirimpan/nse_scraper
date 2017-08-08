@@ -41,8 +41,9 @@
 
     <script type="text/javascript">
       $(document).ready(function() {
-        $.getJSON('/stocks_info.json')
-        .then(function(data) {
+        (function pollServerForNewStockData() {
+          $.getJSON('/stocks_info.json')
+          .then(function(data) {
             var template = _.template($("#top-gainers-losers-tpl").html());
             $('#top-gainers-list').html(
               template({'stocks_data': data.top_gainers})
@@ -50,7 +51,9 @@
             $('#top-losers-list').html(
               template({'stocks_data': data.top_losers})
             );
-        });
+            setTimeout(pollServerForNewStockData, 5 * 60 * 1000);
+          });
+        }());
       });
     </script>
   </body>
