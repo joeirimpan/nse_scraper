@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>NSE Top Gainers and Losers</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha256-NuCn4IvuZXdBaFKJOAcsU2Q3ZpwbdFisd5dux4jkQ5w=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="static/style.css">
+
+    <!-- jQuery first, then Tether, then Bootstrap JS, then Underscore JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+
+    <div class="container-fluid">
+      <center><h4 class="mt-1 col-12">Top Gainers</h4></center>
+      <div class="card-columns">
+        <div id="top-gainers-list"></div>
+      </div>
+      <center><h4 class="mt-1 col-12">Top Losers</h4></center>
+      <div class="card-columns">
+        <div id="top-losers-list"></div>
+      </div>
+    </div>
+
+    <script type="text/html" id="top-gainers-losers-tpl">
+      <%
+        _.each(stocks_data, function(stocks, index) {
+      %>
+        <div class="card">
+          <div class="card-block">
+            <h5 class="card-title"><%= stocks.symbol %></h5>
+            <p class="card-text">Open: <%= stocks.open %></p>
+            <p class="card-text">Close: <%= stocks.previous_close %></p>
+            <p class="card-text">% Change: <%= stocks.percent_of_change %></p>
+            <div class="row pull-right pr-1 pb-1">
+              <span class="text-muted">
+                <i class="fa fa-arrow-up" aria-hidden="true"><%= stocks.high %></i>
+              </span>
+              <span class="text-muted ml-1">
+                <i class="fa fa-arrow-down" aria-hidden="true"><%= stocks.low %></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      <%
+        });
+      %>
+    </script>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        (function pollServerForNewStockData() {
+          $.getJSON('/stocks_info.json')
+          .then(function(data) {
+            var template = _.template($("#top-gainers-losers-tpl").html());
+            $('#top-gainers-list').html(
+              template({'stocks_data': data.top_gainers})
+            );
+            $('#top-losers-list').html(
+              template({'stocks_data': data.top_losers})
+            );
+            setTimeout(pollServerForNewStockData, 5 * 60 * 1000);
+          });
+        }());
+      });
+    </script>
+  </body>
+</html>
