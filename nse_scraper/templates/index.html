@@ -8,6 +8,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="static/style.css">
 
     <!-- jQuery first, then Tether, then Bootstrap JS, then Underscore JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
@@ -17,9 +18,15 @@
   </head>
   <body>
 
-    <div class="row mt-1 ml-1">
-      <div id="top-gainers-list"></div>
-      <div class="ml-1" id="top-losers-list"></div>
+    <div class="container-fluid">
+      <center><h4 class="mt-1 col-12">Top Gainers</h4></center>
+      <div class="card-columns">
+        <div id="top-gainers-list"></div>
+      </div>
+      <center><h4 class="mt-1 col-12">Top Losers</h4></center>
+      <div class="card-columns">
+        <div id="top-losers-list"></div>
+      </div>
     </div>
 
     <script type="text/html" id="top-gainers-losers-tpl">
@@ -28,7 +35,7 @@
       %>
         <div class="card">
           <div class="card-block">
-            <h4 class="card-title"><%= stocks.symbol %></h4>
+            <h5 class="card-title"><%= stocks.symbol %></h5>
             <p class="card-text">Open: <%= stocks.open %></p>
             <p class="card-text">Close: <%= stocks.previous_close %></p>
             <p class="card-text">% Change: <%= stocks.previous_close %></p>
