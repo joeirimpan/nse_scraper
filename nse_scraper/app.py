@@ -40,22 +40,3 @@ class App(object):
             self.scraper.data_key
         )
         return json.loads(data)
-
-
-if __name__ == '__main__':
-    app = App()
-    config = {
-        '/': {
-            'tools.staticdir.on': True,
-            'tools.staticdir.dir': fp('static'),
-        }
-    }
-    cherrypy.tree.mount(
-        root=app,
-        script_name='/',
-        config=config
-    )
-    # Lets start the cherrypy engine so everything works
-    cherrypy.engine.start()
-    # Run the engine main loop
-    cherrypy.engine.block()
