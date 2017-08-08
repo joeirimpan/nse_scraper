@@ -18,6 +18,8 @@ from bs4 import BeautifulSoup
 
 
 class NSEScraper(object):
+    """NSE Scraper class
+    """
 
     SCRAPER = {
         'fields': [
@@ -55,6 +57,8 @@ class NSEScraper(object):
         return phantomjs
 
     def get_redis_client(self):
+        """Return redis client instance
+        """
         return Redis(
             host=os.environ.get('REDIS_HOST', 'localhost'),
             port=os.environ.get('REDIS_PORT', 6379),
@@ -62,6 +66,10 @@ class NSEScraper(object):
         )
 
     def scrape_data_for(self, tab='top_gainers'):
+        """Utility method to scrape data from the given tabs
+
+        :param tab: The tab inside the webpage to interact and scrape
+        """
         interesting_elements = self.SCRAPER.get(tab)
         # Trigger click
         self.phantomjs.find_element_by_id(
@@ -82,10 +90,17 @@ class NSEScraper(object):
         return []
 
     def extract_fields_from_table(self, element):
+        """Extracts all the available fields from the table in order
+
+        :param element: parser table element upon which
+        further processing happens
+        """
         elements = [td.text for td in element.findAll('td')[:-1]]
         return dict(zip(self.SCRAPER['fields'], elements))
 
     def store_now(self):
+        """Persist data onto redis
+        """
         data = dict(
             (tab, self.scrape_data_for(tab))
             for tab in ['top_gainers', 'top_losers']
@@ -94,6 +109,12 @@ class NSEScraper(object):
 
     @contextmanager
     def load_source_for_page(self, id, timeout=30):
+        """A simple context manager which waits till the elements are loaded
+        and return parse ready page source
+
+        :param id: element id for which we wait
+        :param timeout: timeout in seconds
+        """
         WebDriverWait(self.phantomjs, timeout).until(
             expected_conditions.visibility_of_element_located((By.ID, id))
         )
