@@ -1,3 +1,6 @@
+cherrypy
 beautifulsoup4
 selenium
 redis
+
+.
