@@ -7,54 +7,17 @@
 """
 import os
 import json
-from contextlib import contextmanager
 
-from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.common.by import By
 from redis import Redis
-from bs4 import BeautifulSoup
 
 
 class NSEScraper(object):
     """NSE Scraper class
     """
 
-    SCRAPER = {
-        'fields': [
-            'symbol',
-            'last_traded_price',
-            'percent_of_change',
-            'traded_qty',
-            'value_in_lakhs',
-            'open',
-            'high',
-            'low',
-            'previous_close',
-            'latest_ex_date'
-        ],
-        'top_gainers': {
-            'tab': 'tab7',
-            'table': 'topGainers'
-        },
-        'top_losers': {
-            'tab': 'tab8',
-            'table': 'topLosers'
-        },
-    }
-
-    def __init__(self, url=None, *args, **kwargs):
-        self.url = url or 'https://www.nseindia.com/live_market/dynaContent/live_analysis/top_gainers_losers.htm'  # noqa
+    def __init__(self, *args, **kwargs):
+        self.url = 'https://www.nseindia.com/live_market/dynaContent/live_analysis/%s/%s.json'  # noqa
         self.redis_store = self.get_redis_client()
-        self.phantomjs = self.get_phantomjs_browser()
-
-    def get_phantomjs_browser(self):
-        """Return phantomjs headless browser
-        """
-        phantomjs = webdriver.PhantomJS()
-        phantomjs.get(self.url)
-        return phantomjs
 
     def get_redis_client(self):
         """Return redis client instance
@@ -65,38 +28,12 @@ class NSEScraper(object):
             db=os.environ.get('REDIS_DB', 0)
         )
 
-    def scrape_data_for(self, tab='top_gainers'):
-        """Utility method to scrape data from the given tabs
+    def get_stocks_data(self, type='gainers'):
+        """Utility method to fetch data from stocks JSON source
 
-        :param tab: The tab inside the webpage to interact and scrape
+        :param type: The type of the data we need to fetch (gainers, losers)
         """
-        interesting_elements = self.SCRAPER.get(tab)
-        # Trigger click
-        self.phantomjs.find_element_by_id(
-            interesting_elements['tab']
-        ).click()
-
-        with self.load_source_for_page(
-                interesting_elements['table'], timeout=10
-        ) as source:
-            # Find table
-            table_element = source.find(
-                'table', id=interesting_elements['table']
-            )
-            return map(
-                lambda t: self.extract_fields_from_table(t),
-                table_element.findAll('tr')[1:]
-            )
-        return []
-
-    def extract_fields_from_table(self, element):
-        """Extracts all the available fields from the table in order
-
-        :param element: parser table element upon which
-        further processing happens
-        """
-        elements = [td.text for td in element.findAll('td')[:-1]]
-        return dict(zip(self.SCRAPER['fields'], elements))
+        pass
 
     @property
     def data_key(self):
@@ -108,20 +45,7 @@ class NSEScraper(object):
         """Persist data onto redis
         """
         data = dict(
-            (tab, self.scrape_data_for(tab))
-            for tab in ['top_gainers', 'top_losers']
+            (type, self.get_stocks_data(type))
+            for type in ['gainers', 'losers']
         )
         self.redis_store.set(self.data_key, json.dumps(data))
-
-    @contextmanager
-    def load_source_for_page(self, id, timeout=30):
-        """A simple context manager which waits till the elements are loaded
-        and return parse ready page source
-
-        :param id: element id for which we wait
-        :param timeout: timeout in seconds
-        """
-        WebDriverWait(self.phantomjs, timeout).until(
-            expected_conditions.visibility_of_element_located((By.ID, id))
-        )
-        yield BeautifulSoup(self.phantomjs.page_source, 'html.parser')

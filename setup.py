@@ -4,8 +4,6 @@ import setuptools
 
 requirements = [
     'cherrypy',
-    'beautifulsoup4',
-    'selenium',
     'redis'
 ]
 
