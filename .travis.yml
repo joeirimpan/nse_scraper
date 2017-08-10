@@ -3,5 +3,5 @@ python:
   - "2.7"
 # command to install dependencies
 install: "pip install -r requirements-dev.txt"
-# before script run flake8
-before_script: flake8 .
+# script run flake8
+script: flake8 .
