@@ -19,7 +19,7 @@
   </head>
   <body>
 
-    <div class="container-fluid">
+    <div class="container">
       <center><h4 class="mt-1 col-12">Top Gainers</h4></center>
       <div class="card-columns">
         <div id="top-gainers-list"></div>
@@ -37,15 +37,15 @@
         <div class="card">
           <div class="card-block">
             <h5 class="card-title"><%= stocks.symbol %></h5>
-            <p class="card-text">Open: <%= stocks.open %></p>
-            <p class="card-text">Close: <%= stocks.previous_close %></p>
-            <p class="card-text">% Change: <%= stocks.percent_of_change %></p>
+            <p class="card-text">Open: <%= stocks.openPrice %></p>
+            <p class="card-text">Close: <%= stocks.previousPrice %></p>
+            <p class="card-text">Net Price: <%= stocks.netPrice %></p>
             <div class="row pull-right pr-1 pb-1">
               <span class="text-muted">
-                <i class="fa fa-arrow-up" aria-hidden="true"><%= stocks.high %></i>
+                <i class="fa fa-arrow-up" aria-hidden="true"><%= stocks.highPrice %></i>
               </span>
               <span class="text-muted ml-1">
-                <i class="fa fa-arrow-down" aria-hidden="true"><%= stocks.low %></i>
+                <i class="fa fa-arrow-down" aria-hidden="true"><%= stocks.lowPrice %></i>
               </span>
             </div>
           </div>
@@ -62,10 +62,10 @@
           .then(function(data) {
             var template = _.template($("#top-gainers-losers-tpl").html());
             $('#top-gainers-list').html(
-              template({'stocks_data': data.top_gainers})
+              template({'stocks_data': data.gainers})
             );
             $('#top-losers-list').html(
-              template({'stocks_data': data.top_losers})
+              template({'stocks_data': data.losers})
             );
             setTimeout(pollServerForNewStockData, 5 * 60 * 1000);
           });

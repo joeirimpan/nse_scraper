@@ -4,7 +4,8 @@ import setuptools
 
 requirements = [
     'cherrypy',
-    'redis'
+    'redis',
+    'requests'
 ]
 
 test_requirements = ['flake8']

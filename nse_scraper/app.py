@@ -10,7 +10,8 @@ import json
 import cherrypy
 from cherrypy.process.plugins import BackgroundTask
 
-from .scraper import NSEScraper
+from .nse_api import NSE
+from .extensions import redis_store
 from .utils import fp
 
 
@@ -19,13 +20,30 @@ class App(object):
     """
 
     def __init__(self, *args, **kwargs):
-        self.scraper = NSEScraper()
+        self.nse = NSE()
         # Start the cherrypy background cron-like task
         BackgroundTask(
             interval=5 * 60,
-            function=self.scraper.store_now,
+            function=self.store_now,
             bus=cherrypy.engine
         ).start()
+
+    @property
+    def stock_data_key(self):
+        """Return the stock data key
+        """
+        return 'nse:stock_info'
+
+    def store_now(self):
+        """Persist data onto redis
+        """
+        data = {}
+        for type in ['gainers', 'losers']:
+            # Serialize list of dict to string
+            data[type] = json.dumps(self.nse.get_stocks_data(type))
+
+        # Store as hashmap datastructure to improve memory usage
+        redis_store.hmset(self.stock_data_key, data)
 
     @cherrypy.expose
     def index(self):
@@ -36,7 +54,8 @@ class App(object):
     def get_stocks_info(self):
         """JSON endpoint which returns the stocks info
         """
-        data = self.scraper.redis_store.get(
-            self.scraper.data_key
-        )
-        return json.loads(data)
+        data = redis_store.hgetall(self.stock_data_key)
+        # De-serialiaze the values
+        for key, value in data.iteritems():
+            data[key] = json.loads(value)
+        return data
