@@ -8,7 +8,7 @@ requirements = [
     'requests'
 ]
 
-test_requirements = ['flake8']
+test_requirements = ['flake8', 'pytest', 'vcrpy']
 
 setuptools.setup(
     name="nse-scraper",

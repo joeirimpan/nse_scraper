@@ -1,0 +1,88 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.3]
+    method: GET
+    uri: https://www.nseindia.com/live_market/dynaContent/live_analysis/gainers/niftyGainers1.json
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA62W3W7aQBCFX8Xietnuzv7nzoG0pQ0tdZK2UdMLt6wSq8RExqSKqr57xzEkBi8m
+        qpCQELMjMN+eOWf+9Mrs1veOevHyOuKcRMC4ibg6Ug5fPdKbpmXaO/r2p7d4uP0xn2HnMElOhsNL
+        PFv4IvMLLJ18wk/zO59Piuxn9W2cOFCUKSzfZNc36zIQBo66qjyb/240M075Y7W8q9u4poxh4a7w
+        99l8uWj0Skll1Zv7cl0VVFuslEU69dNPyzQvs/Kh6rZEGeK4qA6XRT6/98UoP01/3VRPLTQx+DiP
+        XzZLF+VgXtzFeT5f5j/9rc/LYVo+/qTpv1vO+hWYHY0VvjxfprPojc99ge9j78ssv756Nczus6nP
+        p1E/ShYI9+pVP5r4Ijq7SQvf+0saXOOL5OPkbZyM40602rIaTROs4Yw6tolVa0sle4JqmKY2hFRb
+        RaEFlMsQUKmJYMQpGQaKt2MUtbwbKIg+qu2/gG4SexOPTjtZCaWo2RahMGJ158+snhprVkI7qkKs
+        hFY1/AYrTkGEWAlLhCDWQpAVl4SDoVZ3sxL8Bay2REYN26Wx48mgm5jE++PbxKTjraGVBur5rolJ
+        K8PEpOX1QYMYoxqC6gKCFuS0CxIDRoSy1Jk94ypeMK7H83y5iPgRbOK5PDk7jj+832Nthpn2BGJZ
+        GSrYtrUZBk1rw4Jku6zNCEZ5i5UyQXVx9FKUUJiVQuEZtrq0jkl0/XH6cBBr49BlbV9H+8FKC7WH
+        bUpPULEtvbUDrqVna2pt6amA9FTQ2BwQzYkEFsQpFWHVPe6RHtMHSwrVQXP04XV3+jqj2wJ1bqXa
+        BkkcNaqfSTqrw0PscIi3I2IXSQGYqoQZG44IIGAd5W4PSY4k88MIU6Kz70J5Hp/H4/Nk+DnpBAoQ
+        yFwASWELKHBRa3G1yABQrQJAAXhridkJVBOtidThzLWEWUPlHp7crpWpXxYjPmJoZh0ivDg9T+LB
+        yXjwsTuBcfuCNjssG9mSI5qWhJWH1jmMa6QJuyUeoQ3r9nizEEMgCmWpwlHsiHWYXnu2Fs4OMdwr
+        Te4M6C+jSdJNFNDu2lqs/sCWTQLqwjS0aFez3tJi5Z/qZRyFIrLCZcI7DSY059TIAyT0rv3v+99/
+        FetVmrMMAAA=
+    headers:
+      cache-control: ['max-age=0, no-cache, no-store']
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-length: ['863']
+      content-type: [text/plain]
+      date: ['Sun, 13 Aug 2017 06:10:32 GMT']
+      etag: [W/"cb3-598dbef8"]
+      expires: ['Sun, 13 Aug 2017 06:10:32 GMT']
+      last-modified: ['Fri, 11 Aug 2017 14:28:08 GMT']
+      pragma: [no-cache]
+      server: ['-']
+      vary: [accept-encoding]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.18.3]
+    method: GET
+    uri: https://www.nseindia.com/live_market/dynaContent/live_analysis/losers/niftyLosers1.json
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA62WXW/aSBSG/4rFRdWVBne+znzkjgDbsAWSQrsX/bhwyyixNjHImKyiqP99j7Ep
+        xh7sVRsJCfl4PGYennfOPPey+MH1LnqD3W3AGAk4ZTpgcAEWPz3SW0VZ1Lv4/NzbPj18W9/jyKvJ
+        fDSYDq/x5talsdtibfwer9Ybl9yk8fd8Oi4gpBSLd/HtXaN4v/73Z42ZspZt8kvOQw54uUndY7ze
+        bY/PluMSlx1qfRUqjqUsjVZu9X4XJVmcPeWDCS6FK0Kpym/v0mT96NJJMo3+uct/rtTECh6a/Xuj
+        bTZcp5tBkqx3yXf34JJsFGX5/BT6S7fp50jODMzBJckuug/eusSl+D1zLouT2y9vRvFjvHLJKugH
+        i23AQkaDG5cGy7sodb0fpAL07/Fo2g7TCg9MK0OAGkyNRCowtQ2FF6Y1xeJPYQLzwWTECGI4MQy8
+        MIETzVQou2Cq/l+7+1+CeYpreTmZd+BCMnVcgoqme1qHEo64DD2HS4W6jgvO4FJEK4JMoFCzgYsR
+        K4lAmzW0A+OqP4ueOoCdWsbx3z9aFry+2aWb9dYFC1zP1q3+OAV5eb0cXk0/jDqCTARlviwTxVjT
+        QE442FKGMtFEHSZohpqAFE0VZTG8wVYwAlp7sWrCtAmt6JDQoITJiyTa0i9v+ucifTmYv7scLK5H
+        g1a4TEKR1ypZBrTQt4KVSRbyI1MmeSFkHSiTpjC6ShMBa3+wpSRaErWn1kTKGaEGQm47POUvxjRf
+        5Dmkn8bj9l0SmG5qCsyWET/CBIo5OcYeqAqpL/bAaXGjChMftV41FRGaCGb9oTcYAtxzbWfD+dU9
+        so6So0PnUC4/zm+uBotZu5wSTJOnVDy0NZ5SymrXkegg+OSUijajjjy9cmpDAAXl0stTAFGYHak6
+        4142cPUbPBcuYC1Zn72atYecCGwsDZJ5WeGpoBZ0IiStHoiwANS/e+YzaK+h/rjvj0Swf6PHUEB5
+        D7k4T5SJFzOUiRao1/O3w3aqqmw+J0zRznqTZ1DqWPI8dKcGTSWaTR6BCB9LwI0T7TzT4g3RGo8g
+        pkNO3f/TfetAOUkyRPAQHGXMo83h/3f5xXg6GcyH4w5HAS2zDZ4EDuqeOApCnDoKGEbwOwpGFqeq
+        U677Tbm5ixpigFDlT72i+GYIGX8BRysu7mWsJ/zrj/8AoTQ65BsNAAA=
+    headers:
+      cache-control: ['max-age=0, no-cache, no-store']
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-length: ['896']
+      content-type: [text/plain]
+      date: ['Sun, 13 Aug 2017 06:12:06 GMT']
+      etag: [W/"d1b-598dbef9"]
+      expires: ['Sun, 13 Aug 2017 06:12:06 GMT']
+      last-modified: ['Fri, 11 Aug 2017 14:28:09 GMT']
+      pragma: [no-cache]
+      server: ['-']
+      vary: [accept-encoding]
+      x-frame-options: [SAMEORIGIN]
+    status: {code: 200, message: OK}
+version: 1
